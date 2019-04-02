@@ -34,8 +34,11 @@
 
         <ul class="list-unstyled components">
             <p>Admin panel</p>
-            <li class="{{--{{(Route::is('dashboard'))?'active':''}}--}}">
-                <a href="{{--{{route('dashboard')}}--}}"><span class="glyphicon glyphicon-home"></span>Documents</a>
+            <li class="{{(Route::is('admin.index'))?'active':''}}">
+                <a href="{{route('admin.index')}}"><span class="glyphicon glyphicon-home"></span>Dashboard</a>
+            </li>
+            <li class="{{(Route::is('documents.index'))?'active':''}}">
+                <a href="{{route('documents.index')}}"><span class="glyphicon glyphicon-home"></span>Documents</a>
             </li>
 
         </ul>

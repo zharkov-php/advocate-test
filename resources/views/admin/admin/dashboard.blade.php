@@ -1,4 +1,4 @@
-@extends('admin.admin.index')
+@extends('layouts.admin.index')
 
 @section('content')
     @include('admin.admin.errors.errors')
