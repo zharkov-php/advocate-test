@@ -30,6 +30,11 @@
     <!-- Page Content  -->
     <div id="content">
 
+        @include('admin.admin.errors.flash-message')
+        @include('admin.admin.errors.errors')
+        <a href="{{route('admin.index')}}" ><button type="button" class="btn btn-warning">Admin Panel</button></a>
+
+
         @yield('content')
 
     </div>
@@ -42,7 +47,16 @@
 
 @yield('custom-script')
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
 
+        $('#flash-overlay-modal').modal();
+        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    });
+</script>
 
 </body>
 </html>

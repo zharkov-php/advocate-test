@@ -16,8 +16,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/show/{id}', 'MainController@show')->name('main.show');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'MainController@index')->name('main');
+
+Route::get('generate-pdf/{id}','MainController@pdf')->name('main.pdf');
+Route::get('download-pdf/{id}','MainController@download')->name('main.pdf_download');
+
 
 Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
@@ -25,6 +30,8 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function (
     Route::resource('documents', 'DocumentController');
 
     Route::prefix('documents')->group(function () {
+        Route::get('generate-pdf/{id}','FiledocsController@pdf')->name('filedocs.pdf');
+        Route::get('download-pdf/{id}','FiledocsController@download')->name('filedocs.pdf_download');
         Route::get('/filedocs', 'FiledocsController@index')->name('filedocs.index');
         Route::get('{id}/filedocs/create', 'FiledocsController@create')->name('filedocs.create');
         Route::post('/filedocs/store/', 'FiledocsController@store')->name('filedocs.store');

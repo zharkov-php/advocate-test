@@ -27,7 +27,10 @@
                             <a href="{{route('filedocs.edit', ['id' => $file['id']])}}" class="btn btn-dark">Edit</a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="" class="btn btn-info">Show PDF</a>
+                            <a href="{{route('filedocs.pdf', ['id' => $file['id']] )}}" class="btn btn-info">Show PDF</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="{{route('filedocs.pdf_download', ['id' => $file['id']] )}}" class="btn btn-secondary">Download PDF</a>
                         </div>
                         <div class="col-xs-6">
                             <form class="form-horizontal" method="POST" accept-charset="UTF-8"

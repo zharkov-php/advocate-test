@@ -167,6 +167,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -227,6 +228,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'PdfMerger' => LynX39\LaraPdfMerger\Facades\PdfMerger::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

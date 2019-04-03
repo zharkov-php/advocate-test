@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Filedocs;
 use App\Http\Requests\Admin\FiledocsRequest;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class FiledocsController extends Controller
 {
@@ -91,5 +93,38 @@ class FiledocsController extends Controller
         $documents = Filedocs::find($id);
         $documents->delete();
         return redirect()->back();
+    }
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function pdf($id)
+    {
+        $file = Filedocs::find($id);
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML(
+            '<center><h1>'. $file->name .'</h1></center>'.
+            '<center><h2>'. $file->body .'</h2></center>'
+        );
+        return $pdf->stream();
+
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function download($id)
+    {
+        $file = Filedocs::find($id);
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML(
+            '<center><h1>'. $file->name .'</h1></center>'.
+            '<center><h2>'. $file->body .'</h2></center>'
+        );
+        return $pdf->download($file->name . '.pdf');
+
     }
 }
