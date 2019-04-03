@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Filedocs;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class MainController extends Controller

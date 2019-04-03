@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Filedocs;
 use App\Http\Requests\Admin\FiledocsRequest;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
 
-class FiledocsController extends Controller
+class FiledocsController extends MainAdminController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
