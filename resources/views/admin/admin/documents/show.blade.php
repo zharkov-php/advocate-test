@@ -1,34 +1,50 @@
 @extends('layouts.admin.index')
 
 @section('content')
-    <h1>Document: <b>{{ $document->name }}</b></h1>
 
+    <h1>Files: <b>{{ $document->name }}</b></h1>
 
-        <table class="table table-hover">
-            <thead>
+    <a href="{{route('filedocs.create', ['id' => $document->id])}}" class="btn btn-primary">+ Create</a>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($filedocs as $file)
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-
-                <tr>
-                    <th>#</th>
-                    <td>id file</td>
-                    <td>name file</td>
-                    <td>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a href="#" class="btn btn-info">Edit</a>
-                            </div>
+                <th>{{$loop->iteration}}</th>
+                <td>{{ $file['id'] }}</td>
+                <td>{{ $file['name'] }}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="{{route('filedocs.edit', ['id' => $file['id']])}}" class="btn btn-dark">Edit</a>
                         </div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
+                        <div class="col-xs-6">
+                            <a href="" class="btn btn-info">Show PDF</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <form class="form-horizontal" method="POST" accept-charset="UTF-8"
+                                  enctype="multipart/form-data" action="{{route('filedocs.destroy', $file['id'])}}">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('ты уверен что хочешь удалить?')" type="submit"
+                                        class="delete btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
 @endsection

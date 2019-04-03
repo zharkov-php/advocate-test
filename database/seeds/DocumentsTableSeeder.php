@@ -1,5 +1,6 @@
 <?php
 
+use App\Document;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,7 @@ class DocumentsTableSeeder extends Seeder
         $faker = Factory::create();
 
         for($i = 0; $i < 100; $i++) {
-            App\Documents::create([
+            Document::create([
                 'name' => $faker->firstName . '.' . 'document',
             ]);
         }

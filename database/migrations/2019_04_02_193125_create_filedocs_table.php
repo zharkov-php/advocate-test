@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesHasDocumentsTable extends Migration
+class CreateFiledocsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateFilesHasDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('files_has_documents', function (Blueprint $table) {
+        Schema::create('filedocs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('document_id');
-            $table->integer('file_id');
+            $table->unsignedBigInteger('document_id');
+            $table->string('name');
+            $table->string('body');
             $table->timestamps();
+
+            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -28,6 +32,6 @@ class CreateFilesHasDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files_has_documents');
+        Schema::dropIfExists('filedocs');
     }
 }

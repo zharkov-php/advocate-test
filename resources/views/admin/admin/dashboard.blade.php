@@ -6,5 +6,5 @@
         <i class="fas fa-align-left"></i>
         <span>Toggle Sidebar</span>
     </button>
-    <h1>Dashboard</h1>
+    <h1>This is main page ADMIN</h1>
 @endsection

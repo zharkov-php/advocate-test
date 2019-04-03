@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Documents;
+use App\Document;
+use App\Filedocs;
 use App\Http\Requests\Admin\DocumentRequest;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class DocumentController extends MainAdminController
      */
     public function index()
     {
-        $documents = Documents::select('id', 'name')->orderBy('id','DESC')->paginate(10);
+        $documents = Document::select('id', 'name')->orderBy('id','DESC')->paginate(10);
         return view('admin.admin.documents.index', compact('documents'));
     }
 
@@ -32,11 +33,12 @@ class DocumentController extends MainAdminController
      */
     public function store(DocumentRequest $documentRequest)
     {
-        $newDocument = Documents::create([
+
+        $newDocument = Document::create([
             'name' => $documentRequest->name,
         ]);
 
-        if(!$newDocument instanceof Documents){
+        if(!$newDocument instanceof Document){
             flash('Oops! Something went wrong. Document was not created.')->error();
             return back();
         }
@@ -51,8 +53,9 @@ class DocumentController extends MainAdminController
      */
     public function show($id)
     {
-        $document = Documents::find($id);
-        return view('admin.admin.documents.show', compact('document'));
+        $document = Document::find($id);
+        $filedocs = Filedocs::select('id', 'name', 'body', 'document_id')->where('document_id', '=', $id)->get();
+        return view('admin.admin.documents.show', compact('document', 'filedocs', 'id'));
 
     }
 
@@ -86,7 +89,7 @@ class DocumentController extends MainAdminController
      */
     public function destroy($id)
     {
-        $documents = Documents::find($id);
+        $documents = Document::find($id);
         $documents->delete();
         return redirect()->route('documents.index');
     }
