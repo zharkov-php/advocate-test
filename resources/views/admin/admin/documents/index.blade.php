@@ -20,11 +20,8 @@
 
     <h1>Documents</h1>
 
-    <a href="{{--{{route('parameters_create')}}--}}" class="btn btn-primary">+ Create document</a>
+    <a href="{{route('documents.create')}}" class="btn btn-primary">+ Create document</a>
 
-{{--
-    @if(!is_null($parameters))
---}}
         <table class="table table-hover">
             <thead>
             <tr>
@@ -35,27 +32,34 @@
             </tr>
             </thead>
             <tbody>
-{{--
-            @foreach($parameters as $parameter)
---}}
+            @foreach($documents as $document)
                 <tr>
-                    <th>{{--{{$loop->iteration}}--}}#</th>
-                    <td>{{--{{$parameter->name}}--}}id</td>
-                    <td>{{--@if($parameter->updated_at){{$parameter->updated_at->format('d-m-Y H:i')}}@endif--}}name</td>
+                    <th>{{$loop->iteration}}</th>
+                    <td>{{$document->id}}</td>
+                    <td>{{$document->name}}</td>
                     <td>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="{{--{{ route('parameters_show', ['id' => $parameter->id ]) }}--}}" class="btn btn-info">More info</a>
+                                <a href="{{ route('documents.show', ['id' => $document->id ]) }}" class="btn btn-info">More info</a>
                             </div>
+                            <div class="col-xs-6">
+                                <form class="form-horizontal" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="{{route('documents.destroy', $document->id)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('ты уверен что хочешь удалить?')" type="submit" class="delete btn btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+
+
                         </div>
                     </td>
                 </tr>
-{{--
             @endforeach
---}}
             </tbody>
         </table>
-   {{-- @else
-        sdf
-    @endif--}}
+
+    {{$documents->links()}}
+
 @endsection

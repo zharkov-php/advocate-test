@@ -68,9 +68,9 @@
     <!-- Page Content  -->
     <div id="content">
 
-{{--
-        @include('flash::message')
---}}
+        @include('admin.admin.errors.flash-message')
+        @include('admin.admin.errors.errors')
+
 
         @yield('content')
 

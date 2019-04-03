@@ -2,51 +2,58 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Documents;
+use App\Http\Requests\Admin\DocumentRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class DocumentController extends MainAdminController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('admin.admin.documents.index');
+        $documents = Documents::select('id', 'name')->orderBy('id','DESC')->paginate(10);
+        return view('admin.admin.documents.index', compact('documents'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('admin.admin.documents.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param DocumentRequest $documentRequest
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(DocumentRequest $documentRequest)
     {
-        //
+        $newDocument = Documents::create([
+            'name' => $documentRequest->name,
+        ]);
+
+        if(!$newDocument instanceof Documents){
+            flash('Oops! Something went wrong. Document was not created.')->error();
+            return back();
+        }
+
+        return redirect(route('documents.index'))->with('success', 'Document was successfully created!');
+
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $document = Documents::find($id);
+        return view('admin.admin.documents.show', compact('document'));
+
     }
 
     /**
@@ -72,14 +79,15 @@ class DocumentController extends MainAdminController
         //
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $documents = Documents::find($id);
+        $documents->delete();
+        return redirect()->route('documents.index');
     }
 }
